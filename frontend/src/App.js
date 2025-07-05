@@ -10,15 +10,22 @@ function App() {
   const handleSubmit = async (preferences) => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/match', {
+      const response = await fetch('http://localhost:5000/api/find-neighborhoods', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(preferences)
       });
       const data = await response.json();
-      setResults(data);
+      console.log('Received:', data); // Debug log
+
+      if (data.success && data.matches) {
+        setResults(data.matches);
+      } else {
+        setResults([]);
+      }
     } catch (error) {
       console.error('Error:', error);
+      setResults([]);
     } finally {
       setLoading(false);
     }
