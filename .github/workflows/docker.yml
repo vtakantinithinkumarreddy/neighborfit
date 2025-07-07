@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - master  # or 'main' if that's your default
+      - master  # Change to 'main' if your default branch is main
 
 jobs:
   docker-build:
@@ -26,5 +26,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: ./Dockerfile         # 👈 Ensures it uses the correct Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/neighborfit-fullstack:latest
